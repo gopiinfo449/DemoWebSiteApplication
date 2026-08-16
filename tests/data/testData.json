@@ -1,0 +1,17 @@
+{
+  "jewelry": {
+    "productName": "Black & White Diamond Heart"
+  },
+  "guestCheckout": {
+    "billingAddress": {
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe.qa.test@example.com",
+      "country": "United States",
+      "city": "New York",
+      "address1": "123 Main St",
+      "zipPostalCode": "10001",
+      "phoneNumber": "5555555555"
+    }
+  }
+}
