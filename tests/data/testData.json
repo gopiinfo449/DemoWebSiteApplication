@@ -13,5 +13,42 @@
       "zipPostalCode": "10001",
       "phoneNumber": "5555555555"
     }
+  },
+  "footer": {
+    "internalLinks": [
+      { "column": "information", "name": "Sitemap", "path": "/sitemap", "heading": "Sitemap" },
+      { "column": "information", "name": "Shipping & Returns", "path": "/shipping-returns", "heading": "Shipping & Returns" },
+      { "column": "information", "name": "Privacy Notice", "path": "/privacy-policy", "heading": "Privacy policy" },
+      { "column": "information", "name": "Conditions of Use", "path": "/conditions-of-use", "heading": "Conditions of use" },
+      { "column": "information", "name": "About us", "path": "/about-us", "heading": "About Us" },
+      { "column": "information", "name": "Contact us", "path": "/contactus", "heading": "Contact Us" },
+      { "column": "customerService", "name": "Search", "path": "/search", "heading": "Search" },
+      { "column": "customerService", "name": "News", "path": "/news", "heading": "News" },
+      { "column": "customerService", "name": "Blog", "path": "/blog", "heading": "Blog" },
+      { "column": "customerService", "name": "Recently viewed products", "path": "/recentlyviewedproducts", "heading": "Recently viewed products" },
+      { "column": "customerService", "name": "Compare products list", "path": "/compareproducts", "heading": "Compare products" },
+      { "column": "customerService", "name": "New products", "path": "/newproducts", "heading": "New products" },
+      { "column": "myAccount", "name": "Shopping cart", "path": "/cart", "heading": "Shopping cart" },
+      { "column": "myAccount", "name": "Wishlist", "path": "/wishlist", "heading": "Wishlist" }
+    ],
+    "loginRequiredLinks": [
+      { "column": "myAccount", "name": "My account", "path": "/customer/info", "returnUrl": "%2fcustomer%2finfo" },
+      { "column": "myAccount", "name": "Orders", "path": "/customer/orders", "returnUrl": "%2fcustomer%2forders" },
+      { "column": "myAccount", "name": "Addresses", "path": "/customer/addresses", "returnUrl": "%2fcustomer%2faddresses" }
+    ],
+    "loginHeading": "Welcome, Please Sign In!",
+    "rssLink": {
+      "column": "followUs",
+      "name": "RSS",
+      "path": "/news/rss/1",
+      "contentType": "application/rss+xml"
+    },
+    "externalLinks": [
+      { "column": "followUs", "name": "Facebook", "href": "http://www.facebook.com/nopCommerce", "target": "_blank" },
+      { "column": "followUs", "name": "Twitter", "href": "https://twitter.com/nopCommerce", "target": "_blank" },
+      { "column": "followUs", "name": "YouTube", "href": "http://www.youtube.com/user/nopCommerce", "target": "_blank" },
+      { "column": "followUs", "name": "Google+", "href": "https://plus.google.com/+nopcommerce", "target": "_blank" }
+    ],
+    "poweredByLink": { "name": "nopCommerce", "href": "http://www.nopcommerce.com/" }
   }
 }
