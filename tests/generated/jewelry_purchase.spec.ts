@@ -63,7 +63,7 @@ test.describe("Jewelry: browse, add to cart, and complete checkout as guest", ()
       });
 
       await test.step("Select the default shipping method", async () => {
-        await checkoutPage.continueWithDefaultShippingMethod();
+           await checkoutPage.continueWithDefaultShippingMethod();
       });
 
       await test.step(`Select payment method "${paymentData.paymentMethod}"`, async () => {
