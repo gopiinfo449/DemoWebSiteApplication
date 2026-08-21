@@ -2,6 +2,23 @@
   "jewelry": {
     "productName": "Black & White Diamond Heart"
   },
+  "registration": {
+    "newUser": {
+      "gender": "Male",
+      "firstName": "Jordan",
+      "lastName": "Taylor",
+      "password": "Test@1234"
+    },
+    "validationMessages": {
+      "firstNameRequired": "First name is required.",
+      "lastNameRequired": "Last name is required.",
+      "emailRequired": "Email is required.",
+      "passwordRequired": "Password is required.",
+      "passwordsDoNotMatch": "The password and confirmation password do not match.",
+      "emailAlreadyExists": "already exists"
+    },
+    "successMessage": "Your registration completed"
+  },
   "guestCheckout": {
     "billingAddress": {
       "firstName": "John",
