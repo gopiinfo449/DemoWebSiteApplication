@@ -4,7 +4,7 @@ Your job is to read Jira tasks, create Playwright tests, and update Jira.
 
 Workflow for each task:
 
-1. Fetch the task from Jira using src/jira.ts
+1. Fetch the task from Jira using tests/utils/jira.ts
 
 2. Read the description — understand test steps and acceptance criteria
 

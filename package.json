@@ -8,7 +8,10 @@
     "test:qa": "cross-env TEST_ENV=qa playwright test",
     "test:dev": "cross-env TEST_ENV=dev playwright test",
     "test:stage": "cross-env TEST_ENV=stage playwright test",
-    "test:all-envs": "npm run test:qa && npm run test:dev && npm run test:stage"
+    "test:all-envs": "npm run test:qa && npm run test:dev && npm run test:stage",
+    "test:qa:zephyr": "cross-env TEST_ENV=qa UPDATE_ZEPHYR=true playwright test",
+    "test:dev:zephyr": "cross-env TEST_ENV=dev UPDATE_ZEPHYR=true playwright test",
+    "test:stage:zephyr": "cross-env TEST_ENV=stage UPDATE_ZEPHYR=true playwright test"
   },
   "keywords": [],
   "author": "",
