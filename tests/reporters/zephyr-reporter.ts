@@ -8,10 +8,11 @@ import type {
 } from "@playwright/test/reporter";
 import { createTestCycle, postExecutionResult, zephyrConfigured, ZephyrStatus } from "../utils/zephyr";
 
-const TCID_PATTERN = /@TCID:([A-Z][A-Z0-9]*-T\d+)/g;
+const TCID_PATTERN = /@TCID:([A-Z][A-Z0-9]*-T\d+)/;
 
-function extractTestCaseKeys(test: TestCase): string[] {
-  return [...test.title.matchAll(TCID_PATTERN)].map((match) => match[1]);
+function extractTestCaseKey(test: TestCase): string | null {
+  const match = test.title.match(TCID_PATTERN);
+  return match ? match[1] : null;
 }
 
 function mapStatus(result: TestResult): ZephyrStatus {
@@ -75,24 +76,22 @@ export default class ZephyrReporter implements Reporter {
   async onTestEnd(test: TestCase, result: TestResult): Promise<void> {
     if (this.disabled || !this.cycleKey) return;
 
-    const testCaseKeys = extractTestCaseKeys(test);
-    if (testCaseKeys.length === 0) {
+    const testCaseKey = extractTestCaseKey(test);
+    if (!testCaseKey) {
       this.skipped.push(test.title);
       return;
     }
 
-    for (const testCaseKey of testCaseKeys) {
-      try {
-        await postExecutionResult({
-          testCaseKey,
-          testCycleKey: this.cycleKey,
-          status: mapStatus(result),
-          comment: buildComment(result),
-        });
-        this.synced++;
-      } catch {
-        // Already logged by src/zephyr.ts; don't fail the test run over a Zephyr outage.
-      }
+    try {
+      await postExecutionResult({
+        testCaseKey,
+        testCycleKey: this.cycleKey,
+        status: mapStatus(result),
+        comment: buildComment(result),
+      });
+      this.synced++;
+    } catch {
+      // Already logged by src/zephyr.ts; don't fail the test run over a Zephyr outage.
     }
   }
 
