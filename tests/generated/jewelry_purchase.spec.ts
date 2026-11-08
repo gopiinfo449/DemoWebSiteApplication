@@ -19,7 +19,7 @@ const [paymentData] = readCsv<PaymentTestData>(path.join(__dirname, "../data/tes
 test.describe("Jewelry: browse, add to cart, and complete checkout as guest", () => {
   test.use({ baseURL: env.demoWebShop.baseURL });
 
-  test("user can buy a jewelry product end to end", async ({ page }) => {
+  test("user can buy a jewelry product end to end @TCID:SCRUM-T19", async ({ page }) => {
     const homePage = new HomePage(page);
     const jewelryPage = new JewelryPage(page);
     const checkoutPage = new CheckoutPage(page);

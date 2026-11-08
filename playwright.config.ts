@@ -9,14 +9,17 @@ dotenv.config();
  */
 export default defineConfig({
   testDir: './tests/generated',
+  /* demowebshop.tricentis.com takes 5-16s per page/request, so the defaults (30s test, 5s expect) are too short. */
+  timeout: 120_000,
+  expect: { timeout: 15_000 },
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 0 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 2 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html'],
@@ -29,7 +32,11 @@ export default defineConfig({
     /* Base URL to use in actions like `await page.goto('')`. */
     baseURL: env.playwrightDocs.baseURL,
 
-    headless: false, 
+    headless: false,
+
+    /* Per-action and per-navigation limits; the Register click alone can take ~16s on the demo site. */
+    actionTimeout: 30_000,
+    navigationTimeout: 30_000,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',

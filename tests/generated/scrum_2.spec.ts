@@ -45,7 +45,7 @@ const subMenuItems: SubMenuItem[] = [
 test.describe("SCRUM-2: Validate login functionality for Demo Web Shop", () => {
   test.use({ baseURL: env.demoWebShop.baseURL });
 
-  test("user can log in successfully with valid credentials", async ({ page }) => {
+  test("user can log in successfully with valid credentials @TCID:SCRUM-T10", async ({ page }) => {
     const homePage = new HomePage(page);
 
     await test.step("AC1 - Login with valid credentials", async () => {
@@ -57,7 +57,7 @@ test.describe("SCRUM-2: Validate login functionality for Demo Web Shop", () => {
     });
   });
 
-  test("user cannot log in with invalid credentials", async ({ page }) => {
+  test("user cannot log in with invalid credentials @TCID:SCRUM-T11", async ({ page }) => {
     const homePage = new HomePage(page);
 
     await test.step("AC2 - Login with invalid credentials", async () => {
@@ -70,7 +70,7 @@ test.describe("SCRUM-2: Validate login functionality for Demo Web Shop", () => {
     });
   });
 
-  test("user cannot log in with empty credentials", async ({ page }) => {
+  test("user cannot log in with empty credentials @TCID:SCRUM-T12", async ({ page }) => {
     const homePage = new HomePage(page);
 
     await test.step("AC2 (edge case) - Submit login form with empty email and password", async () => {
@@ -83,7 +83,7 @@ test.describe("SCRUM-2: Validate login functionality for Demo Web Shop", () => {
     });
   });
 
-  test("user cannot log in with a malformed email address", async ({ page }) => {
+  test("user cannot log in with a malformed email address @TCID:SCRUM-T13", async ({ page }) => {
     const homePage = new HomePage(page);
 
     await test.step("AC2 (edge case) - Submit login form with a syntactically invalid email", async () => {
@@ -96,7 +96,7 @@ test.describe("SCRUM-2: Validate login functionality for Demo Web Shop", () => {
     });
   });
 
-  test("login safely rejects SQL-injection-style credentials", async ({ page }) => {
+  test("login safely rejects SQL-injection-style credentials @TCID:SCRUM-T14", async ({ page }) => {
     const homePage = new HomePage(page);
 
     await test.step("AC2 (edge case) - Submit SQL-injection-style input as email and password", async () => {
@@ -108,7 +108,7 @@ test.describe("SCRUM-2: Validate login functionality for Demo Web Shop", () => {
     });
   });
 
-  test('"Remember me?" sets a persistent (non-session) auth cookie on login', async ({ page, context }) => {
+  test('"Remember me?" sets a persistent (non-session) auth cookie on login @TCID:SCRUM-T15', async ({ page, context }) => {
     const homePage = new HomePage(page);
 
     await test.step("AC1 (edge case) - Login with Remember me checked", async () => {
@@ -122,7 +122,7 @@ test.describe("SCRUM-2: Validate login functionality for Demo Web Shop", () => {
     });
   });
 
-  test("user can log out after logging in", async ({ page }) => {
+  test("user can log out after logging in @TCID:SCRUM-T16", async ({ page }) => {
     const homePage = new HomePage(page);
 
     await test.step("AC1 (edge case) - Login, then log out and verify session ends", async () => {
@@ -143,7 +143,7 @@ test.describe("SCRUM-2: Validate home page menu navigation for Demo Web Shop", (
   test.use({ baseURL: env.demoWebShop.baseURL });
 
   for (const item of topLevelMenuItems) {
-    test(`top menu item "${item.name}" navigates to its page`, async ({ page }) => {
+    test(`top menu item "${item.name}" navigates to its page @TCID:SCRUM-T17`, async ({ page }) => {
       const homePage = new HomePage(page);
       const categoryPage = new CategoryPage(page);
 
@@ -158,7 +158,7 @@ test.describe("SCRUM-2: Validate home page menu navigation for Demo Web Shop", (
   }
 
   for (const item of subMenuItems) {
-    test(`submenu item "${item.name}" (under ${item.parent}) navigates to its page`, async ({ page }) => {
+    test(`submenu item "${item.name}" (under ${item.parent}) navigates to its page @TCID:SCRUM-T18`, async ({ page }) => {
       const homePage = new HomePage(page);
       const categoryPage = new CategoryPage(page);
 
