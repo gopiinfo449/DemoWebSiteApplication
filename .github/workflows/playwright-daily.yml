@@ -1,0 +1,74 @@
+name: Playwright Tests (Daily)
+
+on:
+  schedule:
+    # Every day at 02:30 UTC (08:00 IST). GitHub cron is always UTC.
+    - cron: "30 2 * * *"
+  workflow_dispatch:
+    inputs:
+      test_env:
+        description: "Environment to test against"
+        type: choice
+        options: [qa, dev, stage]
+        default: qa
+      update_zephyr:
+        description: "Push results to Zephyr Scale"
+        type: boolean
+        default: true
+
+concurrency:
+  group: playwright-daily-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  test:
+    name: Run Playwright tests (${{ inputs.test_env || 'qa' }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    env:
+      CI: "true"
+      TEST_ENV: ${{ inputs.test_env || 'qa' }}
+      # Scheduled runs have no inputs, so they default to syncing with Zephyr.
+      UPDATE_ZEPHYR: ${{ github.event_name == 'schedule' && 'true' || inputs.update_zephyr && 'true' || 'false' }}
+      DEMOWEBSHOP_EMAIL: ${{ secrets.DEMOWEBSHOP_EMAIL }}
+      DEMOWEBSHOP_PASSWORD: ${{ secrets.DEMOWEBSHOP_PASSWORD }}
+      # Optional: if these are not set the Zephyr reporter skips the sync with a warning.
+      ZEPHYR_API_TOKEN: ${{ secrets.ZEPHYR_API_TOKEN }}
+      ZEPHYR_PROJECT_KEY: ${{ secrets.ZEPHYR_PROJECT_KEY }}
+      ZEPHYR_BASE_URL: ${{ secrets.ZEPHYR_BASE_URL }}
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright tests
+        run: npx playwright test
+
+      - name: Upload HTML report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ env.TEST_ENV }}-${{ github.run_number }}
+          path: playwright-report/
+          retention-days: 14
+
+      - name: Upload test results (traces, screenshots, JSON)
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ env.TEST_ENV }}-${{ github.run_number }}
+          path: test-results/
+          retention-days: 14

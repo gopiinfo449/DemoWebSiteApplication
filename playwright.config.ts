@@ -8,7 +8,7 @@ dotenv.config();
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './tests/generated',
+  testDir: './tests/tests',
   /* demowebshop.tricentis.com takes 5-16s per page/request, so the defaults (30s test, 5s expect) are too short. */
   timeout: 120_000,
   expect: { timeout: 15_000 },
@@ -32,7 +32,8 @@ export default defineConfig({
     /* Base URL to use in actions like `await page.goto('')`. */
     baseURL: env.playwrightDocs.baseURL,
 
-    headless: false,
+    /* Headed locally, headless in CI (GitHub runners have no display). */
+    headless: !!process.env.CI,
 
     /* Per-action and per-navigation limits; the Register click alone can take ~16s on the demo site. */
     actionTimeout: 30_000,
