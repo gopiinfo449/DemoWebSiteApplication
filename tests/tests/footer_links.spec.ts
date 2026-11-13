@@ -1,6 +1,5 @@
-import { test, expect } from "@playwright/test";
-import { HomePage } from "../pages/HomePage";
-import { FooterPage, FooterColumn } from "../pages/FooterPage";
+import { test, expect } from "../fixtures/fixtures";
+import type { FooterColumn } from "../pages/FooterPage";
 import { env } from "../../env";
 import testData from "../data/testData.json";
 
@@ -34,9 +33,7 @@ test.describe("Footer: internal links navigate to the correct page", () => {
   test.use({ baseURL: env.demoWebShop.baseURL });
 
   for (const link of internalLinks) {
-    test(`"${link.name}" footer link navigates to ${link.path} @TCID:SCRUM-T1`, async ({ page }) => {
-      const homePage = new HomePage(page);
-      const footerPage = new FooterPage(page);
+    test(`"${link.name}" footer link navigates to ${link.path} @TCID:SCRUM-T1`, async ({ page, homePage, footerPage }) => {
 
       await test.step(`Click "${link.name}" in the footer`, async () => {
         await homePage.goto();
@@ -55,9 +52,7 @@ test.describe("Footer: account links require sign in", () => {
   test.use({ baseURL: env.demoWebShop.baseURL });
 
   for (const link of loginRequiredLinks) {
-    test(`"${link.name}" footer link redirects an anonymous user to login @TCID:SCRUM-T2`, async ({ page }) => {
-      const homePage = new HomePage(page);
-      const footerPage = new FooterPage(page);
+    test(`"${link.name}" footer link redirects an anonymous user to login @TCID:SCRUM-T2`, async ({ page, homePage, footerPage }) => {
 
       await test.step(`Click "${link.name}" in the footer`, async () => {
         await homePage.goto();
@@ -75,9 +70,7 @@ test.describe("Footer: account links require sign in", () => {
 test.describe("Footer: RSS feed link", () => {
   test.use({ baseURL: env.demoWebShop.baseURL });
 
-  test(`"${rssLink.name}" footer link points to a working RSS feed @TCID:SCRUM-T3`, async ({ page, request }) => {
-    const homePage = new HomePage(page);
-    const footerPage = new FooterPage(page);
+  test(`"${rssLink.name}" footer link points to a working RSS feed @TCID:SCRUM-T3`, async ({ request, homePage, footerPage }) => {
 
     await test.step("Verify the RSS link's destination", async () => {
       await homePage.goto();
@@ -98,9 +91,7 @@ test.describe("Footer: RSS feed link", () => {
 test.describe("Footer: external links point to the correct destination", () => {
   test.use({ baseURL: env.demoWebShop.baseURL });
 
-  test("social and partner links have the correct href and open in a new tab @TCID:SCRUM-T4 @TCID:SCRUM-T5", async ({ page }) => {
-    const homePage = new HomePage(page);
-    const footerPage = new FooterPage(page);
+  test("social and partner links have the correct href and open in a new tab @TCID:SCRUM-T4 @TCID:SCRUM-T5", async ({ homePage, footerPage }) => {
 
     await homePage.goto();
 
