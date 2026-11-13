@@ -1,8 +1,6 @@
 import * as path from "path";
-import { test, expect } from "@playwright/test";
-import { HomePage } from "../pages/HomePage";
-import { JewelryPage } from "../pages/JewelryPage";
-import { CheckoutPage, GuestAddress } from "../pages/CheckoutPage";
+import { test, expect } from "../fixtures/fixtures";
+import type { GuestAddress } from "../pages/CheckoutPage";
 import { readCsv } from "../utils/csvReader";
 import { env } from "../../env";
 import testData from "../data/testData.json";
@@ -19,13 +17,9 @@ const [paymentData] = readCsv<PaymentTestData>(path.join(__dirname, "../data/tes
 test.describe("Jewelry: browse, add to cart, and complete checkout as guest", () => {
   test.use({ baseURL: env.demoWebShop.baseURL });
 
-  test("user can buy a jewelry product end to end @TCID:SCRUM-T19", async ({ page }) => {
+  test("user can buy a jewelry product end to end @TCID:SCRUM-T19", async ({ page, homePage, jewelryPage, checkoutPage }) => {
     // ~10 server round-trips against a slow demo site; triple the configured test timeout.
     test.slow();
-
-    const homePage = new HomePage(page);
-    const jewelryPage = new JewelryPage(page);
-    const checkoutPage = new CheckoutPage(page);
 
     await test.step("Go to the Jewelry tab", async () => {
       await homePage.goto();

@@ -1,6 +1,5 @@
-import { test, expect } from "@playwright/test";
-import { HomePage } from "../pages/HomePage";
-import { RegisterPage, RegistrationDetails } from "../pages/RegisterPage";
+import { test, expect } from "../fixtures/fixtures";
+import type { RegistrationDetails } from "../pages/RegisterPage";
 import { env } from "../../env";
 import testData from "../data/testData.json";
 
@@ -26,9 +25,7 @@ function buildRegistrationDetails(overrides: Partial<RegistrationDetails> = {}):
 test.describe("Register: create a new account", () => {
   test.use({ baseURL: env.demoWebShop.baseURL });
 
-  test("user can register a new account successfully @TCID:SCRUM-T6", async ({ page }) => {
-    const homePage = new HomePage(page);
-    const registerPage = new RegisterPage(page);
+  test("user can register a new account successfully @TCID:SCRUM-T6", async ({ page, homePage, registerPage }) => {
     const details = buildRegistrationDetails();
 
     await test.step("Go to the registration page", async () => {
@@ -52,8 +49,7 @@ test.describe("Register: create a new account", () => {
     });
   });
 
-  test("shows validation errors when required fields are missing @TCID:SCRUM-T7", async ({ page }) => {
-    const registerPage = new RegisterPage(page);
+  test("shows validation errors when required fields are missing @TCID:SCRUM-T7", async ({ registerPage }) => {
 
     await test.step("Go to the registration page and submit an empty form", async () => {
       await registerPage.goto();
@@ -68,8 +64,7 @@ test.describe("Register: create a new account", () => {
     });
   });
 
-  test("shows an error when password and confirmation password do not match @TCID:SCRUM-T8", async ({ page }) => {
-    const registerPage = new RegisterPage(page);
+  test("shows an error when password and confirmation password do not match @TCID:SCRUM-T8", async ({ registerPage }) => {
     const details = buildRegistrationDetails({ confirmPassword: `${newUser.password}Mismatch` });
 
     await test.step("Go to the registration page", async () => {
@@ -85,9 +80,7 @@ test.describe("Register: create a new account", () => {
     });
   });
 
-  test("shows an error when the email is already registered @TCID:SCRUM-T9", async ({ page }) => {
-    const homePage = new HomePage(page);
-    const registerPage = new RegisterPage(page);
+  test("shows an error when the email is already registered @TCID:SCRUM-T9", async ({ homePage, registerPage }) => {
     const email = uniqueEmail("qa.register.duplicate.test");
 
     await test.step("Register a first account with a new email", async () => {
